@@ -112,119 +112,106 @@
             </div>
             <button id="save-settings-btn" class="primary-btn">Save Budget</button>
 
-            <hr>
-
-            <button id="category-budgets-btn" class="secondary-btn">Set Category Budgets</button>
-
-            <hr>
-
-            <button id="reset-period-btn" class="danger-btn">Start New Period</button>
-            <button id="close-settings-btn" class="text-btn">Close</button>
-        </div>
-    </div>
-
-    <!-- Category Budgets Modal -->
-    <div id="category-budgets-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Category Budgets</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
-                Set budget limits for each category (optional)
-            </p>
-            <div id="category-budgets-inputs">
-                <!-- Inputs will be injected here -->
-            </div>
-            <div class="modal-actions">
-                <button id="close-category-budgets-btn" class="text-btn">Cancel</button>
-                <button id="save-category-budgets-btn" class="primary-btn">Save</button>
+            <div class="modal-content">
+                <h2>Category Budgets</h2>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+                    Set budget limits for each category (optional)
+                </p>
+                <div id="category-budgets-inputs">
+                    <!-- Inputs will be injected here -->
+                </div>
+                <div class="modal-actions">
+                    <button id="close-category-budgets-btn" class="text-btn">Cancel</button>
+                    <button id="save-category-budgets-btn" class="primary-btn">Save</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- History Modal -->
-    <div id="history-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2>History</h2>
-            <ul id="history-list" class="history-list">
-                <!-- History items -->
-            </ul>
-            <div class="modal-actions">
-                <button id="close-history-btn" class="text-btn">Close</button>
+        <!-- History Modal -->
+        <div id="history-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>History</h2>
+                <ul id="history-list" class="history-list">
+                    <!-- History items -->
+                </ul>
+                <div class="modal-actions">
+                    <button id="close-history-btn" class="text-btn">Close</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- History Details Modal -->
-    <div id="history-details-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2 id="history-details-title">Week Details</h2>
-            <ul id="history-details-list" class="transaction-list" style="overflow-y: auto; max-height: 50vh;">
-                <!-- Items -->
-            </ul>
-            <div class="modal-actions">
-                <button id="close-history-details-btn" class="text-btn">Back</button>
+        <!-- History Details Modal -->
+        <div id="history-details-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="history-details-title">Week Details</h2>
+                <ul id="history-details-list" class="transaction-list" style="overflow-y: auto; max-height: 50vh;">
+                    <!-- Items -->
+                </ul>
+                <div class="modal-actions">
+                    <button id="close-history-details-btn" class="text-btn">Back</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Insights Modal -->
-    <div id="insights-modal" class="modal hidden">
-        <div class="modal-content insights-content">
-            <h2>Insights</h2>
+        <!-- Insights Modal -->
+        <div id="insights-modal" class="modal hidden">
+            <div class="modal-content insights-content">
+                <h2>Insights</h2>
 
-            <!-- Stats Cards -->
-            <div id="stats-cards" class="stats-grid">
-                <!-- Stats will be injected here -->
-            </div>
+                <!-- Stats Cards -->
+                <div id="stats-cards" class="stats-grid">
+                    <!-- Stats will be injected here -->
+                </div>
 
-            <!-- Spending by Category -->
-            <h3>Spending by Category</h3>
-            <div id="pie-chart" class="chart-container">
-                <!-- Pie chart will be injected here -->
-            </div>
+                <!-- Spending by Category -->
+                <h3>Spending by Category</h3>
+                <div id="pie-chart" class="chart-container">
+                    <!-- Pie chart will be injected here -->
+                </div>
 
-            <!-- Budget vs Actual -->
-            <h3>Budget vs Actual</h3>
-            <div id="budget-vs-actual-chart" class="chart-container">
-                <!-- Bar chart will be injected here -->
-            </div>
+                <!-- Budget vs Actual -->
+                <h3>Budget vs Actual</h3>
+                <div id="budget-vs-actual-chart" class="chart-container">
+                    <!-- Bar chart will be injected here -->
+                </div>
 
-            <!-- Spending Trend -->
-            <h3>Daily Spending Trend</h3>
-            <div id="trend-chart" class="chart-container">
-                <!-- Trend chart will be injected here -->
-            </div>
+                <!-- Spending Trend -->
+                <h3>Daily Spending Trend</h3>
+                <div id="trend-chart" class="chart-container">
+                    <!-- Trend chart will be injected here -->
+                </div>
 
-            <div class="modal-actions">
-                <button id="close-insights-btn" class="text-btn">Close</button>
+                <div class="modal-actions">
+                    <button id="close-insights-btn" class="text-btn">Close</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="app.v5.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                // Check for update on load
-                reg.update();
+        <script src="app.v5.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    // Check for update on load
+                    reg.update();
 
-                // Check for update every time the page becomes visible
-                document.addEventListener('visibilitychange', () => {
-                    if (document.visibilityState === 'visible') {
-                        reg.update();
+                    // Check for update every time the page becomes visible
+                    document.addEventListener('visibilitychange', () => {
+                        if (document.visibilityState === 'visible') {
+                            reg.update();
+                        }
+                    });
+                });
+
+                // Refresh page when new service worker takes control
+                let refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (!refreshing) {
+                        refreshing = true;
+                        window.location.reload();
                     }
                 });
-            });
-
-            // Refresh page when new service worker takes control
-            let refreshing = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refreshing) {
-                    refreshing = true;
-                    window.location.reload();
-                }
-            });
-        }
-    </script>
+            }
+        </script>
 </body>
 
 </html>
