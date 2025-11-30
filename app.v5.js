@@ -59,6 +59,7 @@ const els = {
     categoryBudgetsBtn: document.getElementById('category-budgets-btn'),
     closeCategoryBudgetsBtn: document.getElementById('close-category-budgets-btn'),
     saveCategoryBudgetsBtn: document.getElementById('save-category-budgets-btn'),
+    clearAllDataBtn: document.getElementById('clear-all-data-btn'),
     modalTitle: document.getElementById('modal-title'),
 
     // Currency toggle
@@ -404,6 +405,15 @@ function setupEventListeners() {
         });
     }
 
+    // Clear all data
+    if (els.clearAllDataBtn) {
+        els.clearAllDataBtn.addEventListener('click', () => {
+            if (confirm('⚠️ WARNING: This will delete ALL data including transactions, history, and settings. This cannot be undone. Are you sure?')) {
+                clearAllData();
+            }
+        });
+    }
+
     // Close modal on outside click
     window.addEventListener('click', (e) => {
         if (e.target === els.transactionModal) els.transactionModal.classList.add('hidden');
@@ -610,6 +620,36 @@ function getDaysSinceFirstTransaction() {
     const diffTime = Math.abs(now - firstDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(1, diffDays);
+}
+
+function clearAllData() {
+    // Reset state to defaults
+    state = {
+        budget: 0,
+        currency: 'DT',
+        budgetPeriod: 'weekly',
+        transactions: [],
+        history: [],
+        categoryBudgets: {
+            'Food': 0,
+            'Smoking': 0,
+            'Transport': 0,
+            'Shopping': 0,
+            'Entertainment': 0,
+            'Bills': 0,
+            'Other': 0
+        }
+    };
+
+    // Clear localStorage
+    localStorage.removeItem('expense-tracker-data');
+
+    // Close settings modal and re-render
+    els.settingsModal.classList.add('hidden');
+    render();
+    updatePeriodLabel();
+
+    alert('✅ All data cleared successfully!');
 }
 
 // Start
