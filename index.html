@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Weekly Budget</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.v3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <button id="history-btn" class="icon-btn">📜</button>
+            <h1>My Week</h1>
+            <button id="settings-btn" class="icon-btn">⚙️</button>
+        </header>
+
+        <!-- Budget Card -->
+        <div class="budget-card">
+            <div class="progress-ring-container">
+                <div class="progress-ring" id="budget-ring"></div>
+                <div class="budget-info">
+                    <span class="label">Remaining</span>
+                    <h2 id="remaining-amount">0.00 DT</h2>
+                    <span class="sub-label" id="total-budget">of 0.00 DT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions">
+            <button id="add-expense-btn" class="primary-btn">− Expense</button>
+            <button id="add-income-btn" class="secondary-btn">+ Income</button>
+        </div>
+
+        <!-- Transactions -->
+        <div class="transactions-section">
+            <h3>Recent Activity</h3>
+            <ul id="transaction-list" class="transaction-list">
+                <!-- Items will be injected here -->
+            </ul>
+        </div>
+
+        <div style="text-align: center; color: #333; font-size: 10px; padding: 10px;">v4.1 (Auto-Update)</div>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div id="transaction-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Expense</h2>
+            <form id="transaction-form">
+                <div class="input-group">
+                    <label>Amount (DT)</label>
+                    <input type="number" id="amount-input" step="0.001" placeholder="0.000" required
+                        inputmode="decimal">
+                </div>
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="category-input">
+                        <option value="Food">🍔 Food</option>
+                        <option value="Smoking">🚬 Smoking</option>
+                        <option value="Transport">🚗 Transport</option>
+                        <option value="Shopping">🛍️ Shopping</option>
+                        <option value="Entertainment">🎬 Fun</option>
+                        <option value="Bills">📄 Bills</option>
+                        <option value="Other">🔹 Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Note (Optional)</label>
+                    <input type="text" id="note-input" placeholder="What was it?">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="text-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <div class="input-group">
+                <label>Weekly Budget Goal (DT)</label>
+                <input type="number" id="budget-goal-input" placeholder="200" inputmode="decimal">
+            </div>
+            <button id="save-settings-btn" class="primary-btn">Save Budget</button>
+            <hr>
+            <button id="reset-week-btn" class="danger-btn">Start New Week</button>
+            <button id="close-settings-btn" class="text-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>History</h2>
+            <ul id="history-list" class="history-list">
+                <!-- History items -->
+            </ul>
+            <div class="modal-actions">
+                <button id="close-history-btn" class="text-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Details Modal -->
+    <div id="history-details-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="history-details-title">Week Details</h2>
+            <ul id="history-details-list" class="transaction-list" style="overflow-y: auto; max-height: 50vh;">
+                <!-- Items -->
+            </ul>
+            <div class="modal-actions">
+                <button id="close-history-details-btn" class="text-btn">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.v4.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                // Check for update on load
+                reg.update();
+
+                // Check for update every time the page becomes visible
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') {
+                        reg.update();
+                    }
+                });
+            });
+
+            // Refresh page when new service worker takes control
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
