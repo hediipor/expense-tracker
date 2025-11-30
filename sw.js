@@ -1,10 +1,12 @@
-const CACHE_NAME = 'budget-app-v6';
+const CACHE_NAME = 'budget-app-v7';
 const ASSETS = [
     './',
     './index.html',
     './style.v3.css',
     './app.v4.js',
-    './manifest.json'
+    './manifest.json',
+    './icon-192.png',
+    './icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {

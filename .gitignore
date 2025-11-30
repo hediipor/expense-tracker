@@ -1,0 +1,24 @@
+# Vercel
+.vercel
+
+# Local server files (not needed for Vercel)
+server.ps1
+start.bat
+create-shortcut.bat
+
+# Old versions (not needed)
+app.js
+app.v2.js
+app.v3.js
+style.css
+style.v2.css
+
+# Documentation (optional - you can remove these lines if you want docs in the repo)
+# README.md
+# QUICK-START.md
+# HOW-IT-WORKS.md
+# SOLUTION.md
+
+# System files
+.DS_Store
+Thumbs.db

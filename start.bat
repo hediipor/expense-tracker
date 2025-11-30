@@ -18,5 +18,9 @@ netsh advfirewall firewall add rule name="ExpenseTrackerPWA" dir=in action=allow
 
 :: Run the server
 echo Running as Administrator.
+echo.
+echo Opening browser in 2 seconds...
+timeout /t 2 /nobreak >nul
+start http://localhost:5500
 powershell -ExecutionPolicy Bypass -File "server.ps1"
 pause
