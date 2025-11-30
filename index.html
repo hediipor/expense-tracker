@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Weekly Budget</title>
+    <title>Budget Tracker</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.v3.css">
+    <link rel="stylesheet" href="style.v4.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -21,8 +21,11 @@
         <!-- Header -->
         <header>
             <button id="history-btn" class="icon-btn">📜</button>
-            <h1>My Week</h1>
-            <button id="settings-btn" class="icon-btn">⚙️</button>
+            <h1 id="period-label">My Week</h1>
+            <div class="header-right">
+                <button id="insights-btn" class="icon-btn">📊</button>
+                <button id="settings-btn" class="icon-btn">⚙️</button>
+            </div>
         </header>
 
         <!-- Budget Card -->
@@ -51,7 +54,7 @@
             </ul>
         </div>
 
-        <div style="text-align: center; color: #333; font-size: 10px; padding: 10px;">v4.2 (Offline Ready)</div>
+        <div style="text-align: center; color: #333; font-size: 10px; padding: 10px;">v5.0 (Enhanced)</div>
     </div>
 
     <!-- Add Transaction Modal -->
@@ -60,11 +63,11 @@
             <h2 id="modal-title">Add Expense</h2>
             <form id="transaction-form">
                 <div class="input-group">
-                    <label>Amount (DT)</label>
+                    <label>Amount</label>
                     <input type="number" id="amount-input" step="0.001" placeholder="0.000" required
                         inputmode="decimal">
                 </div>
-                <div class="input-group">
+                <div class="input-group" id="category-input-group">
                     <label>Category</label>
                     <select id="category-input">
                         <option value="Food">🍔 Food</option>
@@ -92,14 +95,48 @@
     <div id="settings-modal" class="modal hidden">
         <div class="modal-content">
             <h2>Settings</h2>
+
+            <div class="settings-section">
+                <h3>Currency</h3>
+                <button id="currency-toggle" class="toggle-btn">DT</button>
+            </div>
+
+            <div class="settings-section">
+                <h3>Budget Period</h3>
+                <button id="period-toggle" class="toggle-btn">Weekly</button>
+            </div>
+
             <div class="input-group">
-                <label>Weekly Budget Goal (DT)</label>
+                <label>Budget Goal</label>
                 <input type="number" id="budget-goal-input" placeholder="200" inputmode="decimal">
             </div>
             <button id="save-settings-btn" class="primary-btn">Save Budget</button>
+
             <hr>
-            <button id="reset-week-btn" class="danger-btn">Start New Week</button>
+
+            <button id="category-budgets-btn" class="secondary-btn">Set Category Budgets</button>
+
+            <hr>
+
+            <button id="reset-period-btn" class="danger-btn">Start New Period</button>
             <button id="close-settings-btn" class="text-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Category Budgets Modal -->
+    <div id="category-budgets-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Category Budgets</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+                Set budget limits for each category (optional)
+            </p>
+            <div id="category-budgets-inputs">
+                <!-- Inputs will be injected here -->
+            </div>
+            <div class="modal-actions">
+                <button id="close-category-budgets-btn" class="text-btn">Cancel</button>
+                <button id="save-category-budgets-btn" class="primary-btn">Save</button>
+            </div>
         </div>
     </div>
 
@@ -129,7 +166,41 @@
         </div>
     </div>
 
-    <script src="app.v4.js"></script>
+    <!-- Insights Modal -->
+    <div id="insights-modal" class="modal hidden">
+        <div class="modal-content insights-content">
+            <h2>Insights</h2>
+
+            <!-- Stats Cards -->
+            <div id="stats-cards" class="stats-grid">
+                <!-- Stats will be injected here -->
+            </div>
+
+            <!-- Spending by Category -->
+            <h3>Spending by Category</h3>
+            <div id="pie-chart" class="chart-container">
+                <!-- Pie chart will be injected here -->
+            </div>
+
+            <!-- Budget vs Actual -->
+            <h3>Budget vs Actual</h3>
+            <div id="budget-vs-actual-chart" class="chart-container">
+                <!-- Bar chart will be injected here -->
+            </div>
+
+            <!-- Spending Trend -->
+            <h3>Daily Spending Trend</h3>
+            <div id="trend-chart" class="chart-container">
+                <!-- Trend chart will be injected here -->
+            </div>
+
+            <div class="modal-actions">
+                <button id="close-insights-btn" class="text-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.v5.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(reg => {
